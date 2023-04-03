@@ -1,52 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tic-Tac-Toe</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-    <header>
-        <h1>Tic-Tac-Toe</h1>
-    </header>
-
-
-
-    <main>
-        <main-container>
-            <player-selection-container>
-                <button>Two Players</button>
-                <button>AI Bot</button>
-            </player-selection-container>
-            <div style="display: none;">P1/P2 Turn</div>
-            <div class="board">
-                <div class="row">
-                    <button class="pad" id="zero"></button>
-                    <button class="pad" id="one"></button>
-                    <button class="pad" id="two"></button>
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Tic-Tac-Toe</title>
+        <link rel="stylesheet" href="styles.css" />
+    </head>
+    <body>
+        <header>
+            <h1>Tic-Tac-Toe</h1>
+        </header>
+        <main>
+            <main-container>
+                <player-selection-container>
+                    <button>Two Players</button>
+                    <button>AI Bot</button>
+                </player-selection-container>
+                <div style="display: none">P1/P2 Turn</div>
+                <div class="board">
+                    <div class="row">
+                        <button class="pad" id="zero"></button>
+                        <button class="pad" id="one"></button>
+                        <button class="pad" id="two"></button>
+                    </div>
+                    <div class="row">
+                        <button class="pad" id="three"></button>
+                        <button class="pad" id="four"></button>
+                        <button class="pad" id="five"></button>
+                    </div>
+                    <div class="row">
+                        <button class="pad" id="six"></button>
+                        <button class="pad" id="seven"></button>
+                        <button class="pad" id="eight"></button>
+                    </div>
                 </div>
-                <div class="row">
-                    <button class="pad" id="three"></button>
-                    <button class="pad" id="four"></button>
-                    <button class="pad" id="five"></button>
-                </div>
-                <div class="row">
-                    <button class="pad" id="six"></button>
-                    <button class="pad" id="seven"></button>
-                    <button class="pad" id="eight"></button>
-                </div>
-            </div>
-            <button onClick="window.location.reload();">Restart</button>
-        </main-container>
-    </main>
-
-
-    
-    <footer>
-        <p>Copyright © 2023 Oscar Mora</p>
-    </footer>
-    <script src="javascript.js"></script>
-</body>
+                <button onClick="window.location.reload();">Restart</button>
+            </main-container>
+        </main>
+        <footer>
+            <p>Copyright © 2023 Oscar Mora</p>
+        </footer>
+        <script src="javascript.js"></script>
+    </body>
 </html>
