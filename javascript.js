@@ -28,23 +28,29 @@ const gameController = (() => {
     return { playRound, getActivePlayerToken };
 })();
 
-const gameBoard = (() => {
-    const row = 3;
-    const column = row;
-    const _board = [];
+const displayController = (() => {
+    const playerTurnDisplay = document.querySelector('#player-turn');
+    const htmlBoard = Array.from(document.querySelectorAll('button.pad'));
 
-    let _win = false;
-
-    function _playerTurnDisplay() {
-        if (_win) return;
-
+    const updatePlayerTurnDisplay = () => {
         if (round === 9) {
-            console.log("It's a Tie!");
+            console.log("It's a Draw!");
+            playerTurnDisplay.innerText = "It's a Draw!";
             return round++;
         }
 
         console.log(`${gameController.getActivePlayerToken()}'s Turn`);
-    }
+        playerTurnDisplay.innerText = `${gameController.getActivePlayerToken()}'s Turn`;
+    };
+
+    return { updatePlayerTurnDisplay };
+})();
+
+const gameBoard = (() => {
+    const row = 3;
+    const column = row;
+    const _board = [];
+    let _win = false;
 
     for (let i = 0; i < row; i++) {
         _board[i] = [];
@@ -105,11 +111,8 @@ const gameBoard = (() => {
     };
 
     const _checkForWin = (board) => {
-        if (
-            _checkRows(board) ||
-            _checkColumns(board) ||
-            _checkDiagonals(board)
-        ) {
+        // prettier-ignore
+        if (_checkRows(board) || _checkColumns(board) || _checkDiagonals(board)) {
             _win = true;
             console.log(`${gameController.getActivePlayerToken()} Wins!`);
             return true;
@@ -133,11 +136,13 @@ const gameBoard = (() => {
 
         round++;
 
-        _playerTurnDisplay();
+        if (_win) return;
+
+        displayController.updatePlayerTurnDisplay();
     };
 
     console.log(_board);
-    _playerTurnDisplay();
+    displayController.updatePlayerTurnDisplay();
 
     return { dropToken };
 })();
