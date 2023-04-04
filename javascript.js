@@ -5,6 +5,7 @@
 /* eslint-disable no-plusplus */
 /* eslint-disable no-underscore-dangle */
 let round = 0;
+let win = false;
 
 const Player = (token) => {
     this.token = token;
@@ -16,11 +17,10 @@ const gameController = (() => {
     const _playerOne = Player('X');
     const _playerTwo = Player('O');
 
-    // prettier-ignore
-    const getActivePlayerToken = () => round % 2 === 0 ? _playerOne.getToken() : _playerTwo.getToken();
+    const getActivePlayerToken = () => (round % 2 === 0 ? _playerOne.getToken() : _playerTwo.getToken());
 
     const playRound = (row, column) => {
-        if (row > 2 || column > 2) return console.log('Invalid Entry');
+        if (row > 2 || column > 2) return;
         if (round > 9) return;
         gameBoard.dropToken(row, column, getActivePlayerToken());
     };
@@ -29,43 +29,61 @@ const gameController = (() => {
 })();
 
 const displayController = (() => {
-    const playerTurnDisplay = document.querySelector('#player-turn');
-    const htmlBoard = Array.from(document.querySelectorAll('button.pad'));
+    const _playerTurnDisplay = document.querySelector('#player-turn');
+    const _btn0 = document.getElementById('btn0');
+    const _btn1 = document.getElementById('btn1');
+    const _btn2 = document.getElementById('btn2');
+    const _btn3 = document.getElementById('btn3');
+    const _btn4 = document.getElementById('btn4');
+    const _btn5 = document.getElementById('btn5');
+    const _btn6 = document.getElementById('btn6');
+    const _btn7 = document.getElementById('btn7');
+    const _btn8 = document.getElementById('btn8');
+
+    const _btnArray = [_btn0, _btn1, _btn2, _btn3, _btn4, _btn5, _btn6, _btn7, _btn8];
+
+    const updateGameButtons = (board) => {
+        for (let i = 0; i < board.length; i++) {
+            for (let j = 0; j < board[i].length; j++) {
+                const value = board[i][j];
+                const button = _btnArray[i * board[i].length + j];
+                button.innerHTML = value;
+            }
+        }
+    };
 
     const updatePlayerTurnDisplay = () => {
+        if (win === true) {
+            _playerTurnDisplay.innerText = `${gameController.getActivePlayerToken()} Wins!`;
+            return;
+        }
         if (round === 9) {
-            console.log("It's a Draw!");
-            playerTurnDisplay.innerText = "It's a Draw!";
+            _playerTurnDisplay.innerText = "It's a Draw!";
             return round++;
         }
 
-        console.log(`${gameController.getActivePlayerToken()}'s Turn`);
-        playerTurnDisplay.innerText = `${gameController.getActivePlayerToken()}'s Turn`;
+        _playerTurnDisplay.innerText = `${gameController.getActivePlayerToken()}'s Turn`;
     };
 
-    return { updatePlayerTurnDisplay };
+    return { updatePlayerTurnDisplay, updateGameButtons };
 })();
 
 const gameBoard = (() => {
-    const row = 3;
-    const column = row;
-    const _board = [];
-    let _win = false;
+    const _row = 3;
+    const _column = _row;
+    const board = [];
 
-    for (let i = 0; i < row; i++) {
-        _board[i] = [];
-
-        for (let j = 0; j < column; j++) {
-            _board[i].push(0);
+    // Create Array for Board
+    for (let i = 0; i < _row; i++) {
+        board[i] = [];
+        for (let j = 0; j < _column; j++) {
+            board[i].push('&nbsp;');
         }
     }
 
     const _checkRows = (board) => {
-        for (const row of board) {
-            if (
-                row.every((val) => val === 'X') ||
-                row.every((val) => val === 'O')
-            ) {
+        for (const _row of board) {
+            if (_row.every((val) => val === 'X') || _row.every((val) => val === 'O')) {
                 return true;
             }
         }
@@ -81,10 +99,7 @@ const gameBoard = (() => {
             for (let j = 0; j < numRows; j++) {
                 column.push(board[j][i]);
             }
-            if (
-                column.every((val) => val === 'X') ||
-                column.every((val) => val === 'O')
-            ) {
+            if (column.every((val) => val === 'X') || column.every((val) => val === 'O')) {
                 return true;
             }
         }
@@ -95,54 +110,45 @@ const gameBoard = (() => {
         const diagonal1 = [board[0][0], board[1][1], board[2][2]];
         const diagonal2 = [board[0][2], board[1][1], board[2][0]];
 
-        if (
-            diagonal1.every((val) => val === 'X') ||
-            diagonal1.every((val) => val === 'O')
-        ) {
+        if (diagonal1.every((val) => val === 'X') || diagonal1.every((val) => val === 'O')) {
             return true;
         }
-        if (
-            diagonal2.every((val) => val === 'X') ||
-            diagonal2.every((val) => val === 'O')
-        ) {
+        if (diagonal2.every((val) => val === 'X') || diagonal2.every((val) => val === 'O')) {
             return true;
         }
         return false;
     };
 
     const _checkForWin = (board) => {
-        // prettier-ignore
         if (_checkRows(board) || _checkColumns(board) || _checkDiagonals(board)) {
-            _win = true;
-            console.log(`${gameController.getActivePlayerToken()} Wins!`);
+            win = true;
+            displayController.updatePlayerTurnDisplay();
             return true;
         }
         return false;
     };
 
-    const dropToken = (row, column, playerToken) => {
-        if (_win) return;
+    const dropToken = (_row, _column, playerToken) => {
+        if (win) return;
 
-        if (_board[row][column] !== 0) {
-            console.log('Spot Already Taken');
-            return console.log(_board);
+        if (board[_row][_column] !== '&nbsp;') {
+            return;
         }
 
-        _board[row][column] = playerToken;
+        board[_row][_column] = playerToken;
 
-        _checkForWin(_board);
+        _checkForWin(board);
 
-        console.log(_board);
+        displayController.updateGameButtons(board);
 
         round++;
 
-        if (_win) return;
+        if (win) return;
 
         displayController.updatePlayerTurnDisplay();
     };
 
-    console.log(_board);
     displayController.updatePlayerTurnDisplay();
 
-    return { dropToken };
+    return { dropToken, board };
 })();

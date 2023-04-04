@@ -13,26 +13,22 @@
         </header>
         <main>
             <main-container>
-                <!--<player-selection-container>
-                    <button>Two Players</button>
-                    <button>AI Bot</button>
-                </player-selection-container>-->
                 <div id="player-turn"></div>
                 <div class="board">
                     <div class="row">
-                        <button class="pad" id="zero"></button>
-                        <button class="pad" id="one"></button>
-                        <button class="pad" id="two"></button>
+                        <button class="pad" id="btn0" onclick="gameController.playRound(0,0);"></button>
+                        <button class="pad" id="btn1" onclick="gameController.playRound(0,1);"></button>
+                        <button class="pad" id="btn2" onclick="gameController.playRound(0,2);"></button>
                     </div>
                     <div class="row">
-                        <button class="pad" id="three"></button>
-                        <button class="pad" id="four"></button>
-                        <button class="pad" id="five"></button>
+                        <button class="pad" id="btn3" onclick="gameController.playRound(1,0);"></button>
+                        <button class="pad" id="btn4" onclick="gameController.playRound(1,1);"></button>
+                        <button class="pad" id="btn5" onclick="gameController.playRound(1,2);"></button>
                     </div>
                     <div class="row">
-                        <button class="pad" id="six"></button>
-                        <button class="pad" id="seven"></button>
-                        <button class="pad" id="eight"></button>
+                        <button class="pad" id="btn6" onclick="gameController.playRound(2,0);"></button>
+                        <button class="pad" id="btn7" onclick="gameController.playRound(2,1);"></button>
+                        <button class="pad" id="btn8" onclick="gameController.playRound(2,2);"></button>
                     </div>
                 </div>
                 <button onClick="window.location.reload();">Restart</button>
