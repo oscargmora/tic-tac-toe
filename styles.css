@@ -157,6 +157,15 @@ footer {
     height: var(--footer-height);
 }
 
+#github-link {
+    color: #cddfdd;
+    text-decoration: none;
+}
+
+#github-link:hover {
+    color: #b3c0bf;
+}
+
 /* Fix Styling for Phone */
 @media (max-width: 540px) {
     body {
